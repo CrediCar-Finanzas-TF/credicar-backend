@@ -8,4 +8,5 @@ import java.util.Optional;
  */
 public interface CrmContextFacade {
     Optional<Long> fetchClientIdByDocumentNumber(String documentNumber);
+    boolean existsClientById(Long clientId);
 }
