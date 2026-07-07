@@ -19,7 +19,9 @@ public class VehicleResourceFromEntityAssembler {
                 vehicle.getTechnicalSpecs().traction(),
                 vehicle.getTechnicalSpecs().vehicleType(),
                 vehicle.getPrice().amount(),
-                vehicle.getPrice().currency()
+                vehicle.getPrice().currency(),
+                vehicle.getStock(),
+                vehicle.getLocation()
         );
     }
 }

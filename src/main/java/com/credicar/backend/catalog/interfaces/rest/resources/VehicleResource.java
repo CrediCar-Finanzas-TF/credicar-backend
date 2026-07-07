@@ -15,5 +15,7 @@ public record VehicleResource(
         String traction,
         String vehicleType,
         BigDecimal priceAmount,
-        String priceCurrency) {
+        String priceCurrency,
+        int stock,
+        String location) {
 }

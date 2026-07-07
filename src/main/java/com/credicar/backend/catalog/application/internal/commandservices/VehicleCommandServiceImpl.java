@@ -31,31 +31,36 @@ public class VehicleCommandServiceImpl implements VehicleCommandService {
                 new VehicleBusinessId("V-SUV-001"),
                 new VehicleDetails("Toyota", "RAV4", "2.5L Hybrid XSE AWD", "https://example.com/images/toyota-rav4.jpg"),
                 new TechnicalSpecs("2.5L 4-Cylinder Hybrid", "CVT Automatic", "219 HP", "AWD", "SUV"),
-                new Money(new BigDecimal("119990.00"), "PEN")
+                new Money(new BigDecimal("119990.00"), "PEN"),
+                8, "Lima - Miraflores"
             ),
             new Vehicle(
                 new VehicleBusinessId("V-SUV-002"),
                 new VehicleDetails("Kia", "Sportage", "1.6T GT-Line AWD", "https://example.com/images/kia-sportage.jpg"),
                 new TechnicalSpecs("1.6L Turbocharged 4-Cylinder", "7-Speed DCT", "177 HP", "AWD", "SUV"),
-                new Money(new BigDecimal("109990.00"), "PEN")
+                new Money(new BigDecimal("109990.00"), "PEN"),
+                5, "Lima - San Isidro"
             ),
             new Vehicle(
                 new VehicleBusinessId("V-SUV-003"),
                 new VehicleDetails("Hyundai", "Tucson", "2.5L SEL Preferred AWD", "https://example.com/images/hyundai-tucson.jpg"),
                 new TechnicalSpecs("2.5L 4-Cylinder", "8-Speed Automatic", "187 HP", "AWD", "SUV"),
-                new Money(new BigDecimal("99990.00"), "PEN")
+                new Money(new BigDecimal("99990.00"), "PEN"),
+                12, "Lima - Surco"
             ),
             new Vehicle(
                 new VehicleBusinessId("V-SED-001"),
                 new VehicleDetails("Toyota", "Camry", "2.5L XSE V6 FWD", "https://example.com/images/toyota-camry.jpg"),
                 new TechnicalSpecs("2.5L V6", "8-Speed Automatic", "203 HP", "FWD", "Sedan"),
-                new Money(new BigDecimal("89990.00"), "PEN")
+                new Money(new BigDecimal("89990.00"), "PEN"),
+                3, "Arequipa - Centro"
             ),
             new Vehicle(
                 new VehicleBusinessId("V-SED-002"),
                 new VehicleDetails("Honda", "Accord", "1.5T Sport FWD", "https://example.com/images/honda-accord.jpg"),
                 new TechnicalSpecs("1.5L Turbocharged 4-Cylinder", "CVT Automatic", "192 HP", "FWD", "Sedan"),
-                new Money(new BigDecimal("79990.00"), "PEN")
+                new Money(new BigDecimal("79990.00"), "PEN"),
+                6, "Lima - La Molina"
             )
         );
 
