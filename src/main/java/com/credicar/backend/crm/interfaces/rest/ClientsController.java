@@ -2,6 +2,7 @@ package com.credicar.backend.crm.interfaces.rest;
 
 import com.credicar.backend.crm.domain.model.queries.GetClientByDocumentNumberQuery;
 import com.credicar.backend.crm.domain.model.queries.GetClientByIdQuery;
+import com.credicar.backend.crm.domain.model.queries.GetClientsBySearchQuery;
 import com.credicar.backend.crm.domain.services.ClientCommandService;
 import com.credicar.backend.crm.domain.services.ClientQueryService;
 import com.credicar.backend.crm.interfaces.rest.resources.ClientResource;
@@ -16,6 +17,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -52,7 +54,25 @@ public class ClientsController {
                 .orElse(ResponseEntity.badRequest().build());
     }
 
-    @GetMapping
+    @GetMapping(params = "search")
+    @Operation(
+            summary = "Search clients by name or document number",
+            description = "Returns a paginated list of clients whose first name, last name, or document number contains the search term (case-insensitive).")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Results returned (may be empty)"),
+    })
+    public ResponseEntity<Page<ClientResource>> searchClients(
+            @Parameter(description = "Text to search in first name, last name or document number", example = "Juan")
+            @RequestParam String search,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "20") int size) {
+        var query = new GetClientsBySearchQuery(search, page, size);
+        var results = clientQueryService.handle(query)
+                .map(ClientResourceFromEntityAssembler::toResourceFromEntity);
+        return ResponseEntity.ok(results);
+    }
+
+    @GetMapping(params = "documentNumber")
     @Operation(
             summary = "Get a client by document number",
             description = "Retrieves the full profile of a client identified by their document number. The 'documentNumber' query parameter is required.")
