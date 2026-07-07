@@ -25,6 +25,9 @@ public class PaymentScheduleCalculatorServiceImpl implements PaymentScheduleCalc
         int graceMonths = command.gracePeriodMonths() != null ? command.gracePeriodMonths() : 0;
         double desgravamenRate = (command.desgravamenRate() != null ? command.desgravamenRate() : 0.0) / 100.0;
         double vehicularIns = command.vehicularInsuranceMonthly() != null ? command.vehicularInsuranceMonthly().doubleValue() : 0.0;
+        double roadsideIns = command.roadsideAssistanceMonthly() != null ? command.roadsideAssistanceMonthly() : 0.0;
+        double extendedWarranty = command.extendedWarrantyMonthly() != null ? command.extendedWarrantyMonthly() : 0.0;
+        double unemploymentIns = command.unemploymentInsuranceMonthly() != null ? command.unemploymentInsuranceMonthly() : 0.0;
         double additionalExpensesTotal = command.additionalExpenses() != null ? command.additionalExpenses().doubleValue() : 0.0;
         boolean isSmart = "SMART".equalsIgnoreCase(command.modality());
         double balloonPct = (isSmart && command.balloonPaymentPercentage() != null) ? command.balloonPaymentPercentage() : 0.30;
@@ -88,7 +91,7 @@ public class PaymentScheduleCalculatorServiceImpl implements PaymentScheduleCalc
 
             double desgravamen = initialBal * desgravamenRate;
             double additional = (i == 1) ? additionalExpensesTotal : 0.0;
-            double totalQuotaValue = loanPart + desgravamen + vehicularIns + additional;
+            double totalQuotaValue = loanPart + desgravamen + vehicularIns + roadsideIns + extendedWarranty + unemploymentIns + additional;
 
             items.add(new PaymentScheduleItem(
                     i, dueDate, quotaGraceType,
@@ -97,6 +100,9 @@ public class PaymentScheduleCalculatorServiceImpl implements PaymentScheduleCalc
                     money(interestValue, currency),
                     money(desgravamen, currency),
                     money(vehicularIns, currency),
+                    money(roadsideIns, currency),
+                    money(extendedWarranty, currency),
+                    money(unemploymentIns, currency),
                     money(additional, currency),
                     money(totalQuotaValue, currency),
                     money(balance, currency)

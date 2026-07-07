@@ -73,6 +73,27 @@ public class PaymentScheduleItem extends AuditableModel {
 
     @Embedded
     @AttributeOverrides({
+            @AttributeOverride(name = "amount", column = @Column(name = "roadsideAssistanceAmount")),
+            @AttributeOverride(name = "currency", column = @Column(name = "roadsideAssistanceCurrency"))
+    })
+    private Money roadsideAssistance;
+
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "amount", column = @Column(name = "extendedWarrantyAmount")),
+            @AttributeOverride(name = "currency", column = @Column(name = "extendedWarrantyCurrency"))
+    })
+    private Money extendedWarranty;
+
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "amount", column = @Column(name = "unemploymentInsuranceAmount")),
+            @AttributeOverride(name = "currency", column = @Column(name = "unemploymentInsuranceCurrency"))
+    })
+    private Money unemploymentInsurance;
+
+    @Embedded
+    @AttributeOverrides({
             @AttributeOverride(name = "amount", column = @Column(name = "additionalExpensesAmount")),
             @AttributeOverride(name = "currency", column = @Column(name = "additionalExpensesCurrency"))
     })
@@ -95,6 +116,7 @@ public class PaymentScheduleItem extends AuditableModel {
     public PaymentScheduleItem(Integer quotaNumber, LocalDate dueDate, String graceType,
                                 Money initialBalance, Money amortization, Money interest,
                                 Money desgravamenInsurance, Money vehicularInsurance,
+                                Money roadsideAssistance, Money extendedWarranty, Money unemploymentInsurance,
                                 Money additionalExpenses, Money monthlyQuota, Money finalBalance) {
         this.quotaNumber = quotaNumber;
         this.dueDate = dueDate;
@@ -104,6 +126,9 @@ public class PaymentScheduleItem extends AuditableModel {
         this.interest = interest;
         this.desgravamenInsurance = desgravamenInsurance;
         this.vehicularInsurance = vehicularInsurance;
+        this.roadsideAssistance = roadsideAssistance;
+        this.extendedWarranty = extendedWarranty;
+        this.unemploymentInsurance = unemploymentInsurance;
         this.additionalExpenses = additionalExpenses;
         this.monthlyQuota = monthlyQuota;
         this.finalBalance = finalBalance;

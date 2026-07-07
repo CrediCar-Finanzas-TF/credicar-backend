@@ -18,5 +18,9 @@ public record GenerateQuotationCommand(
         Double desgravamenRate,
         BigDecimal vehicularInsuranceMonthly,
         BigDecimal additionalExpenses,
-        Double balloonPaymentPercentage) {
+        Double balloonPaymentPercentage,
+        Double cokPercentage,
+        Double roadsideAssistanceMonthly,
+        Double extendedWarrantyMonthly,
+        Double unemploymentInsuranceMonthly) {
 }

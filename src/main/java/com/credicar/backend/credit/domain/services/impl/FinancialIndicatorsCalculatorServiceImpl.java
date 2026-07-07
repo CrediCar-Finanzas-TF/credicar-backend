@@ -14,27 +14,32 @@ import java.util.List;
 public class FinancialIndicatorsCalculatorServiceImpl implements FinancialIndicatorsCalculatorService {
 
     @Override
-    public FinancialIndicators calculate(BigDecimal financingAmount, List<PaymentScheduleItem> schedule, InterestRate interestRate) {
-        double tem = calculateTEM(interestRate.type(), interestRate.percentage(), interestRate.capitalization());
+    public FinancialIndicators calculate(BigDecimal financingAmount, List<PaymentScheduleItem> schedule,
+                                          InterestRate interestRate, Double cokPercentage) {
         double loan = financingAmount.doubleValue();
 
-        double van = calculateVAN(loan, schedule, tem);
+        double cokMonthly = calculateMonthlyCok(cokPercentage);
+        double van = calculateVAN(loan, schedule, cokMonthly);
+
         double tirMonthly = calculateTIR(loan, schedule);
-        double tcea = (Math.pow(1 + tirMonthly, 12) - 1) * 100;
         double tirAnnualPct = tirMonthly * 12 * 100;
 
-        return new FinancialIndicators(
-                round(van, 2),
-                round(tirAnnualPct, 4),
-                round(tcea, 4)
-        );
+        double tem = calculateTEM(interestRate.type(), interestRate.percentage(), interestRate.capitalization());
+        double tcea = (Math.pow(1 + tem, 12) - 1) * 100;
+
+        return new FinancialIndicators(round(van, 2), round(tirAnnualPct, 4), round(tcea, 4));
     }
 
-    private double calculateVAN(double loan, List<PaymentScheduleItem> schedule, double tem) {
-        double van = -loan;
+    private double calculateMonthlyCok(Double cokAnnualPercentage) {
+        double cok = (cokAnnualPercentage != null ? cokAnnualPercentage : 0.0) / 100.0;
+        return Math.pow(1 + cok, 1.0 / 12) - 1;
+    }
+
+    private double calculateVAN(double loan, List<PaymentScheduleItem> schedule, double discountRateMonthly) {
+        double van = loan;
         for (int i = 0; i < schedule.size(); i++) {
             double cf = schedule.get(i).getMonthlyQuota().amount().doubleValue();
-            van += cf / Math.pow(1 + tem, i + 1);
+            van -= cf / Math.pow(1 + discountRateMonthly, i + 1);
         }
         return van;
     }

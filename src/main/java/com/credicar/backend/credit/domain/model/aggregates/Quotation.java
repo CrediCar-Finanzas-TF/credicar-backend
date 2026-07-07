@@ -60,7 +60,13 @@ public class Quotation extends AuditableAbstractAggregateRoot<Quotation> {
     @Embedded
     @AttributeOverrides({
             @AttributeOverride(name = "vehicularInsuranceMonthly.amount", column = @Column(name = "vehicularInsuranceMonthlyAmount")),
-            @AttributeOverride(name = "vehicularInsuranceMonthly.currency", column = @Column(name = "vehicularInsuranceMonthlyCurrency"))
+            @AttributeOverride(name = "vehicularInsuranceMonthly.currency", column = @Column(name = "vehicularInsuranceMonthlyCurrency")),
+            @AttributeOverride(name = "roadsideAssistanceMonthly.amount", column = @Column(name = "roadsideAssistanceMonthlyAmount")),
+            @AttributeOverride(name = "roadsideAssistanceMonthly.currency", column = @Column(name = "roadsideAssistanceMonthlyCurrency")),
+            @AttributeOverride(name = "extendedWarrantyMonthly.amount", column = @Column(name = "extendedWarrantyMonthlyAmount")),
+            @AttributeOverride(name = "extendedWarrantyMonthly.currency", column = @Column(name = "extendedWarrantyCurrency")),
+            @AttributeOverride(name = "unemploymentInsuranceMonthly.amount", column = @Column(name = "unemploymentInsuranceMonthlyAmount")),
+            @AttributeOverride(name = "unemploymentInsuranceMonthly.currency", column = @Column(name = "unemploymentInsuranceMonthlyCurrency"))
     })
     private Insurances insurances;
 

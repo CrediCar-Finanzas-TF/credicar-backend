@@ -17,6 +17,7 @@ import com.credicar.backend.credit.domain.services.QuotationCommandService;
 import com.credicar.backend.credit.infrastructure.persistence.jpa.repositories.QuotationRepository;
 import com.credicar.backend.shared.domain.model.valueobjects.Money;
 import org.springframework.stereotype.Service;
+import java.math.BigDecimal;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
@@ -66,7 +67,10 @@ public class QuotationCommandServiceImpl implements QuotationCommandService {
         );
         var insurances = new Insurances(
                 command.desgravamenRate() != null ? command.desgravamenRate() : 0.0,
-                new Money(command.vehicularInsuranceMonthly(), command.currency())
+                new Money(command.vehicularInsuranceMonthly(), command.currency()),
+                new Money(command.roadsideAssistanceMonthly() != null ? BigDecimal.valueOf(command.roadsideAssistanceMonthly()) : BigDecimal.ZERO, command.currency()),
+                new Money(command.extendedWarrantyMonthly() != null ? BigDecimal.valueOf(command.extendedWarrantyMonthly()) : BigDecimal.ZERO, command.currency()),
+                new Money(command.unemploymentInsuranceMonthly() != null ? BigDecimal.valueOf(command.unemploymentInsuranceMonthly()) : BigDecimal.ZERO, command.currency())
         );
 
         var quotation = new Quotation(command.clientId(), command.vehicleId(),
@@ -74,7 +78,7 @@ public class QuotationCommandServiceImpl implements QuotationCommandService {
 
         var schedule = scheduleCalculator.calculate(command);
         FinancialIndicators indicators = indicatorsCalculator.calculate(
-                command.financingAmount(), schedule, interestRate);
+                command.financingAmount(), schedule, interestRate, command.cokPercentage());
 
         quotation.attachScheduleItems(schedule);
         quotation.attachFinancialIndicators(indicators);

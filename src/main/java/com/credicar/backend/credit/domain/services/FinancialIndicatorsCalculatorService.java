@@ -8,5 +8,6 @@ import java.math.BigDecimal;
 import java.util.List;
 
 public interface FinancialIndicatorsCalculatorService {
-    FinancialIndicators calculate(BigDecimal financingAmount, List<PaymentScheduleItem> schedule, InterestRate interestRate);
+    FinancialIndicators calculate(BigDecimal financingAmount, List<PaymentScheduleItem> schedule,
+                                  InterestRate interestRate, Double cokPercentage);
 }

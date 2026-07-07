@@ -22,7 +22,11 @@ public class GenerateQuotationCommandFromResourceAssembler {
                 resource.desgravamenRate(),
                 resource.vehicularInsuranceMonthly(),
                 resource.additionalExpenses(),
-                resource.balloonPaymentPercentage()
+                resource.balloonPaymentPercentage(),
+                resource.cokPercentage(),
+                resource.roadsideAssistanceMonthly(),
+                resource.extendedWarrantyMonthly(),
+                resource.unemploymentInsuranceMonthly()
         );
     }
 }

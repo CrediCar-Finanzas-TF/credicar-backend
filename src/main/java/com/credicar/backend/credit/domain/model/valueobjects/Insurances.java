@@ -5,5 +5,10 @@ import jakarta.persistence.Embeddable;
 import jakarta.persistence.Embedded;
 
 @Embeddable
-public record Insurances(Double desgravamenRate, @Embedded Money vehicularInsuranceMonthly) {
+public record Insurances(
+        Double desgravamenRate,
+        @Embedded Money vehicularInsuranceMonthly,
+        @Embedded Money roadsideAssistanceMonthly,
+        @Embedded Money extendedWarrantyMonthly,
+        @Embedded Money unemploymentInsuranceMonthly) {
 }
