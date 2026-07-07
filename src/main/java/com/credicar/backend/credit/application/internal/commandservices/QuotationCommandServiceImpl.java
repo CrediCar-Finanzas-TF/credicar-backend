@@ -78,7 +78,7 @@ public class QuotationCommandServiceImpl implements QuotationCommandService {
 
         var schedule = scheduleCalculator.calculate(command);
         FinancialIndicators indicators = indicatorsCalculator.calculate(
-                command.financingAmount(), schedule, interestRate, command.cokPercentage());
+                command.financingAmount(), schedule, command.cokPercentage());
 
         quotation.attachScheduleItems(schedule);
         quotation.attachFinancialIndicators(indicators);
