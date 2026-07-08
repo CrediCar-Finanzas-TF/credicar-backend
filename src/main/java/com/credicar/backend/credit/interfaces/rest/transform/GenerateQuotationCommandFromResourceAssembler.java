@@ -26,7 +26,9 @@ public class GenerateQuotationCommandFromResourceAssembler {
                 resource.cokPercentage(),
                 resource.roadsideAssistanceMonthly(),
                 resource.extendedWarrantyMonthly(),
-                resource.unemploymentInsuranceMonthly()
+                resource.unemploymentInsuranceMonthly(),
+                resource.notaryFee(),
+                resource.registryFee()
         );
     }
 }

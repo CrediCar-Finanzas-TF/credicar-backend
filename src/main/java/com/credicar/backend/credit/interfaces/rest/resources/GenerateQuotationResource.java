@@ -22,5 +22,7 @@ public record GenerateQuotationResource(
         Double cokPercentage,
         Double roadsideAssistanceMonthly,
         Double extendedWarrantyMonthly,
-        Double unemploymentInsuranceMonthly) {
+        Double unemploymentInsuranceMonthly,
+        Double notaryFee,
+        Double registryFee) {
 }

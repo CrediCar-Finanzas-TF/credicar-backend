@@ -74,7 +74,10 @@ public class QuotationCommandServiceImpl implements QuotationCommandService {
         );
 
         var quotation = new Quotation(command.clientId(), command.vehicleId(),
-                parameters, interestRate, gracePeriod, insurances);
+                parameters, interestRate, gracePeriod, insurances,
+                command.notaryFee() != null ? BigDecimal.valueOf(command.notaryFee()) : BigDecimal.ZERO,
+                command.registryFee() != null ? BigDecimal.valueOf(command.registryFee()) : BigDecimal.ZERO,
+                command.cokPercentage() != null ? command.cokPercentage() : 0.0);
 
         var schedule = scheduleCalculator.calculate(command);
         FinancialIndicators indicators = indicatorsCalculator.calculate(

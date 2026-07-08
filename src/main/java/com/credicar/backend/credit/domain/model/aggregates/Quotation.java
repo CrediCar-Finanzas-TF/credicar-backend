@@ -19,6 +19,7 @@ import jakarta.persistence.OrderBy;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -70,6 +71,15 @@ public class Quotation extends AuditableAbstractAggregateRoot<Quotation> {
     })
     private Insurances insurances;
 
+    @Column
+    private BigDecimal notaryFee;
+
+    @Column
+    private BigDecimal registryFee;
+
+    @Column
+    private Double cokPercentage;
+
     @Embedded
     private FinancialIndicators financialIndicators;
 
@@ -78,13 +88,17 @@ public class Quotation extends AuditableAbstractAggregateRoot<Quotation> {
     private List<PaymentScheduleItem> schedule = new ArrayList<>();
 
     public Quotation(Long clientId, Long vehicleId, QuotationParameters parameters,
-                     InterestRate interestRate, GracePeriod gracePeriod, Insurances insurances) {
+                     InterestRate interestRate, GracePeriod gracePeriod, Insurances insurances,
+                     BigDecimal notaryFee, BigDecimal registryFee, Double cokPercentage) {
         this.clientId = clientId;
         this.vehicleId = vehicleId;
         this.parameters = parameters;
         this.interestRate = interestRate;
         this.gracePeriod = gracePeriod;
         this.insurances = insurances;
+        this.notaryFee = notaryFee;
+        this.registryFee = registryFee;
+        this.cokPercentage = cokPercentage;
         this.financialIndicators = new FinancialIndicators(0.0, 0.0, 0.0);
     }
 
