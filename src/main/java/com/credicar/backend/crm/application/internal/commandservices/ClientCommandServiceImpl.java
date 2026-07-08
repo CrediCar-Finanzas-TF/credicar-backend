@@ -1,9 +1,12 @@
 package com.credicar.backend.crm.application.internal.commandservices;
 
+import com.credicar.backend.crm.application.internal.outboundservices.acl.ExternalQuotationService;
 import com.credicar.backend.crm.domain.exceptions.ClientAlreadyExistsException;
+import com.credicar.backend.crm.domain.exceptions.ClientHasQuotationsException;
 import com.credicar.backend.crm.domain.exceptions.ClientNotFoundException;
 import com.credicar.backend.crm.domain.model.aggregates.Client;
 import com.credicar.backend.crm.domain.model.commands.CreateClientCommand;
+import com.credicar.backend.crm.domain.model.commands.DeleteClientCommand;
 import com.credicar.backend.crm.domain.model.commands.UpdateClientCommand;
 import com.credicar.backend.crm.domain.model.valueobjects.DocumentId;
 import com.credicar.backend.crm.domain.services.ClientCommandService;
@@ -17,9 +20,12 @@ import java.util.Optional;
 public class ClientCommandServiceImpl implements ClientCommandService {
 
     private final ClientRepository clientRepository;
+    private final ExternalQuotationService externalQuotationService;
 
-    public ClientCommandServiceImpl(ClientRepository clientRepository) {
+    public ClientCommandServiceImpl(ClientRepository clientRepository,
+                                     ExternalQuotationService externalQuotationService) {
         this.clientRepository = clientRepository;
+        this.externalQuotationService = externalQuotationService;
     }
 
     @Override
@@ -42,5 +48,16 @@ public class ClientCommandServiceImpl implements ClientCommandService {
         client.updateInformation(command);
         clientRepository.save(client);
         return Optional.of(client);
+    }
+
+    @Override
+    @Transactional
+    public void handle(DeleteClientCommand command) {
+        var client = clientRepository.findById(command.clientId())
+                .orElseThrow(() -> new ClientNotFoundException(command.clientId()));
+        if (externalQuotationService.existsQuotationsByClientId(command.clientId())) {
+            throw new ClientHasQuotationsException(command.clientId());
+        }
+        clientRepository.delete(client);
     }
 }

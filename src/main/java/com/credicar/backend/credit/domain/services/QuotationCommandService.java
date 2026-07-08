@@ -5,4 +5,5 @@ import com.credicar.backend.credit.domain.model.commands.GenerateQuotationComman
 
 public interface QuotationCommandService {
     Quotation handle(GenerateQuotationCommand command);
+    Quotation preview(GenerateQuotationCommand command);
 }

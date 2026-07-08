@@ -44,6 +44,16 @@ public class QuotationCommandServiceImpl implements QuotationCommandService {
 
     @Override
     public Quotation handle(GenerateQuotationCommand command) {
+        return quotationRepository.save(buildQuotation(command));
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Quotation preview(GenerateQuotationCommand command) {
+        return buildQuotation(command);
+    }
+
+    private Quotation buildQuotation(GenerateQuotationCommand command) {
         if (!externalClientService.existsClientById(command.clientId()))
             throw new ClientNotAvailableException(command.clientId());
 
@@ -86,6 +96,6 @@ public class QuotationCommandServiceImpl implements QuotationCommandService {
         quotation.attachScheduleItems(schedule);
         quotation.attachFinancialIndicators(indicators);
 
-        return quotationRepository.save(quotation);
+        return quotation;
     }
 }

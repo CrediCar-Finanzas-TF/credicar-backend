@@ -1,5 +1,6 @@
 package com.credicar.backend.crm.interfaces.rest;
 
+import com.credicar.backend.crm.domain.model.commands.DeleteClientCommand;
 import com.credicar.backend.crm.domain.model.queries.GetClientByDocumentNumberQuery;
 import com.credicar.backend.crm.domain.model.queries.GetClientByIdQuery;
 import com.credicar.backend.crm.domain.model.queries.GetClientsBySearchQuery;
@@ -122,5 +123,19 @@ public class ClientsController {
         return clientCommandService.handle(command)
                 .map(client -> ResponseEntity.ok(ClientResourceFromEntityAssembler.toResourceFromEntity(client)))
                 .orElse(ResponseEntity.notFound().build());
+    }
+
+    @DeleteMapping("/{clientId}")
+    @Operation(
+            summary = "Delete a client",
+            description = "Deletes a client by ID. Fails if the client has associated quotations.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "204", description = "Client deleted successfully"),
+            @ApiResponse(responseCode = "404", description = "Client not found"),
+            @ApiResponse(responseCode = "409", description = "Client has associated quotations and cannot be deleted"),
+    })
+    public ResponseEntity<Void> deleteClient(@PathVariable Long clientId) {
+        clientCommandService.handle(new DeleteClientCommand(clientId));
+        return ResponseEntity.noContent().build();
     }
 }
