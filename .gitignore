@@ -1,8 +1,17 @@
 HELP.md
+
+### Maven ###
 target/
 .mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
+
+### Logs ###
+*.log
+*.out
+
+### Spring Boot ###
+/spring.log
 
 ### STS ###
 .apt_generated
@@ -31,3 +40,13 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### OS ###
+.DS_Store
+Thumbs.db
+
+### Test reports ###
+/surefire-reports/
+/jacoco.exec
+
+CLAUDE.md
